@@ -9,12 +9,15 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.vincent.ppb_project.R;
 
 public class SplashActivity extends AppCompatActivity {
 
     ImageView ivLogo;
     Animation logoAnim;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,18 +29,39 @@ public class SplashActivity extends AppCompatActivity {
         logoAnim = AnimationUtils.loadAnimation(this, R.anim.fade_in_anim);
         ivLogo.setAnimation(logoAnim);
 
+        // Set Firebase
+        mAuth = FirebaseAuth.getInstance();
+
         Handler handler = new Handler();
 
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getBaseContext(), FirstAuthActivity.class);
-                startActivity(intent);
-                finish();
+                if (isFirstTimeUser()) {
+                    Intent intent = new Intent(getBaseContext(), FirstAuthActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         };
 
         handler.postDelayed(runnable, 4000);
+
+    }
+
+    private boolean isFirstTimeUser() {
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+
+        if (firebaseUser != null) {
+            return false;
+        } else {
+            return true;
+        }
 
     }
 }
