@@ -138,10 +138,14 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         int btnId = v.getId();
 
         if (btnId == R.id.btn_verify) {
-
             if (pinview.getText() != null) {
-                String manualCode = pinview.getText().toString();
-                verifyCode(manualCode);
+                if (!pinview.getText().toString().isEmpty()) {
+                    String manualCode = pinview.getText().toString();
+                    verifyCode(manualCode);
+                } else  {
+                    Toast.makeText(this, "Kode OTP tidak boleh kosong!", Toast.LENGTH_SHORT).show();
+                }
+
             }
         }
     }

@@ -90,6 +90,7 @@
             app:hideLineWhenFilled="true"
             app:cursorColor="@color/navy"
             android:cursorVisible="true"
+            android:inputType="number"
             android:itemBackground="#FDF2E1"/>
 
         <com.google.android.material.button.MaterialButton
