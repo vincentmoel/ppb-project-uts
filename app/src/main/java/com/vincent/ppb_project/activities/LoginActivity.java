@@ -14,8 +14,8 @@ import com.vincent.ppb_project.R;
 public class LoginActivity extends AppCompatActivity
         implements View.OnClickListener {
 
-    private MaterialButton btnLogin;
-    private MaterialButton btnRegisterAtLogin;
+    MaterialButton btnLogin;
+    MaterialButton btnRegisterAtLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

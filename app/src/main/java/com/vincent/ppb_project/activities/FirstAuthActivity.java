@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.vincent.ppb_project.R;
 
@@ -28,26 +30,32 @@ public class FirstAuthActivity extends AppCompatActivity implements View.OnClick
         btnNext = findViewById(R.id.btn_next_firstAuth);
         parentLayout = findViewById(android.R.id.content);
 
+
         // On Click
         btnNext.setOnClickListener(this);
     }
 
     private boolean validateNoHp() {
-        String noHpAwal = tiNoHp.getEditText().getText().toString().trim();
 
-        if (noHpAwal.isEmpty()) {
-            tiNoHp.setError("Nomor Handphone tidak boleh kosong");
-            return false;
-        } else {
-            tiNoHp.setError(null);
-            String firstDigit = String.valueOf(noHpAwal.charAt(0));
-            if (firstDigit.equals("0")) {
-                noHp = "+62" + noHpAwal.substring(1);
+        if (tiNoHp.getEditText() != null) {
+            String noHpAwal = tiNoHp.getEditText().getText().toString().trim();
+            if (noHpAwal.isEmpty()) {
+                tiNoHp.setError("Nomor Handphone tidak boleh kosong");
+                return false;
             } else {
-                noHp = "+62" + noHpAwal;
+                tiNoHp.setError(null);
+                String firstDigit = String.valueOf(noHpAwal.charAt(0));
+                if (firstDigit.equals("0")) {
+                    noHp = "+62" + noHpAwal.substring(1);
+                } else {
+                    noHp = "+62" + noHpAwal;
+                }
+                return true;
             }
-            return true;
+        } else {
+            return false;
         }
+
     }
 
     @Override
