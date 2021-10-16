@@ -26,6 +26,7 @@ import com.google.firebase.firestore.auth.User;
 import com.vincent.ppb_project.R;
 import com.vincent.ppb_project.data.DataKelas;
 import com.vincent.ppb_project.model.UserModel;
+import com.vincent.ppb_project.session.SessionManager;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -42,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     FirebaseAuth mAuth;
     FirebaseFirestore firestoreRoot;
     String fullname, kelas, namaKelas, absen, email, noHp, password;
+    SessionManager loginSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         // Set Firebase
         mAuth = FirebaseAuth.getInstance();
         firestoreRoot = FirebaseFirestore.getInstance();
+
+        // Set Session
+        loginSession = new SessionManager(this, SessionManager.LOGIN_SESSION);
 
         setDropdownKelas();
 
@@ -125,7 +130,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if (!regex.matcher(email).matches()) {
                     tiEmail.setError("Email tidak sesuai (contoh@email.com)");
                 } else {
-                    tiEmail.setError(null);
 
                     // Cek apakah ada email di DB
                     firestoreRoot.collection("users").whereEqualTo("email", email)
@@ -151,7 +155,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                         // Jika nomor HP sama dgn First Auth, tidak perlu verify
                                         if (isSameWithFirstAuth()) {
                                             saveDataUserToDB();
-
                                         }
                                         // Jika nomor HP beda dgn First Auth, maka harus verify
                                         else {
@@ -177,7 +180,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 allValidation();
             }
             else {
-                tiNoHp.setError(null);
                 String firstDigit = String.valueOf(noHpAwal.charAt(0));
                 if (firstDigit.equals("0")) {
                     noHp = "+62" + noHpAwal.substring(1);
@@ -277,6 +279,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         @Override
                         public void onSuccess(Void unused) {
                             Toast.makeText(getBaseContext(), "Register Complete!", Toast.LENGTH_SHORT).show();
+                            loginSession.createLoginSession(dataUser);
                             Intent intent = new Intent(getBaseContext(), DashboardActivity.class);
                             startActivity(intent);
                         }

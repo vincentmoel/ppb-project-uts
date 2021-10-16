@@ -30,6 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
 import com.vincent.ppb_project.R;
 import com.vincent.ppb_project.model.UserModel;
+import com.vincent.ppb_project.session.SessionManager;
 
 import java.util.concurrent.TimeUnit;
 
@@ -43,6 +44,8 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     String noHp, fromWhere, codeBySystem;
     UserModel dataUser;
     FirebaseFirestore firestoreRoot;
+    SessionManager loginSession, rememberMeSession;
+    boolean isRememberMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,10 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         mAuth = FirebaseAuth.getInstance();
         firestoreRoot = FirebaseFirestore.getInstance();
 
+        // Set Session
+        loginSession = new SessionManager(this, SessionManager.LOGIN_SESSION);
+        rememberMeSession = new SessionManager(this, SessionManager.REMEMBERME_SESSION);
+
         // Get Intent
         fromWhere = getIntent().getStringExtra("from");
         // Jika dari First Auth
@@ -69,6 +76,12 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         else if (fromWhere.equals("register")) {
             dataUser = getIntent().getParcelableExtra("dataUser");
             noHp = dataUser.getNoHp();
+        }
+        // Jika dari Login
+        else if (fromWhere.equals("login")) {
+            dataUser = getIntent().getParcelableExtra("dataUser");
+            noHp = dataUser.getNoHp();
+            isRememberMe = getIntent().getBooleanExtra("isRememberMe", false);
         }
 
         // On Click
@@ -140,6 +153,16 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                         else if (fromWhere.equals("register")) {
                             saveDataUserToDB();
                         }
+                        // Jika dari login
+                        else if (fromWhere.equals("login")) {
+                            Toast.makeText(this, "Berhasil login!", Toast.LENGTH_SHORT).show();
+                            loginSession.createLoginSession(dataUser);
+                            if (isRememberMe) {
+                                rememberMeSession.createRememberMeSession();
+                            }
+                            Intent intent = new Intent(this, DashboardActivity.class);
+                            startActivity(intent);
+                        }
 
                     } else {
                         if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
@@ -158,6 +181,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                         @Override
                         public void onSuccess(Void unused) {
                             Toast.makeText(getBaseContext(), "Register Complete!", Toast.LENGTH_SHORT).show();
+                            loginSession.createLoginSession(dataUser);
                             Intent intent = new Intent(getBaseContext(), DashboardActivity.class);
                             startActivity(intent);
                         }

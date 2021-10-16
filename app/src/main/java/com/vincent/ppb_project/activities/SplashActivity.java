@@ -12,12 +12,14 @@ import android.widget.ImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.vincent.ppb_project.R;
+import com.vincent.ppb_project.session.SessionManager;
 
 public class SplashActivity extends AppCompatActivity {
 
     ImageView ivLogo;
     Animation logoAnim;
     FirebaseAuth mAuth;
+    SessionManager rememberMeSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,9 @@ public class SplashActivity extends AppCompatActivity {
         // Set Firebase
         mAuth = FirebaseAuth.getInstance();
 
+        // Set Session
+        rememberMeSession = new SessionManager(this, SessionManager.REMEMBERME_SESSION);
+
         Handler handler = new Handler();
 
         Runnable runnable = new Runnable() {
@@ -42,9 +47,17 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+                    // Jika Remember Me
+                    if (rememberMeSession.isRememberedMe()) {
+                        Intent intent = new Intent(getBaseContext(), DashboardActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
                 }
 
             }

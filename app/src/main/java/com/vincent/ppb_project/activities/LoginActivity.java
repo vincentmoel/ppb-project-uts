@@ -1,21 +1,44 @@
 package com.vincent.ppb_project.activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.vincent.ppb_project.R;
+import com.vincent.ppb_project.model.UserModel;
+import com.vincent.ppb_project.session.SessionManager;
+
+import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity
         implements View.OnClickListener {
 
     MaterialButton btnLogin;
     MaterialButton btnRegisterAtLogin;
+    TextInputLayout tiNoHp;
+    TextInputLayout tiPassword;
+    String noHp;
+    String password;
+    CheckBox rememberMeCheckbox;
+    FirebaseAuth mAuth;
+    FirebaseFirestore firestoreRoot;
+    SessionManager loginSession, rememberMeSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +48,152 @@ public class LoginActivity extends AppCompatActivity
         // Hooks
         btnLogin = findViewById(R.id.btn_login);
         btnRegisterAtLogin = findViewById(R.id.btn_sudah_punya_akun);
+        tiNoHp = findViewById(R.id.ti_noHp_login);
+        tiPassword = findViewById(R.id.ti_password_login);
+        rememberMeCheckbox = findViewById(R.id.checkbox_rememberme);
+
+        // Set Firebase
+        firestoreRoot = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
+        // Set Session
+        loginSession = new SessionManager(this, SessionManager.LOGIN_SESSION);
+        rememberMeSession = new SessionManager(this, SessionManager.REMEMBERME_SESSION);
+
+        Toast.makeText(this, FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber(), Toast.LENGTH_SHORT).show();
+
+        setEditTextLoginSession();
 
         btnLogin.setOnClickListener(this);
         btnRegisterAtLogin.setOnClickListener(this);
+    }
+
+    private void setEditTextLoginSession() {
+        String noHp = loginSession.getLoginSessionData().getNoHp().replace("+62", "0");
+        assert tiNoHp.getEditText() != null;
+        tiNoHp.getEditText().setText(noHp);
+    }
+
+    private boolean validatePassword() {
+        if (tiPassword.getEditText() != null) {
+            password = tiPassword.getEditText().getText().toString().trim();
+            Pattern regex = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
+
+            if (password.isEmpty()) {
+                tiPassword.setError("Password tidak boleh kosong!");
+                return false;
+            }
+            else {
+                if (!regex.matcher(password).matches()) {
+                    tiPassword.setError("Password lemah!\n(minimal 8 karakter, gunakan 1 huruf besar dan angka)");
+                    return false;
+                } else {
+                    tiPassword.setError(null);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void validateNoHp() {
+        if (tiNoHp.getEditText() != null) {
+            String noHpAwal = tiNoHp.getEditText().getText().toString();
+            if (noHpAwal.isEmpty()) {
+                tiNoHp.setError("Nomor Handphone tidak boleh kosong!");
+                validatePassword();
+            } else {
+                String firstDigit = String.valueOf(noHpAwal.charAt(0));
+                if (firstDigit.equals("0")) {
+                    noHp = "+62" + noHpAwal.substring(1);
+                } else {
+                    noHp = "+62" + noHpAwal;
+                }
+
+                // Cek apakah nomor HP ada di DB
+                firestoreRoot.collection("users").whereEqualTo("noHp", noHp)
+                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                if (error != null) {
+                                    return;
+                                }
+
+                                // Jika nomor HP ada di DB
+                                if (value != null && !value.isEmpty()) {
+                                    tiNoHp.setError(null);
+
+                                    if (validatePassword()) {
+                                        UserModel dataUser = new UserModel();
+                                        for (DocumentSnapshot ds : value) {
+                                            dataUser = ds.toObject(UserModel.class);
+                                        }
+
+                                        // Jika Password valid dgn password DB
+                                        assert dataUser != null;
+                                        if (dataUser.getPassword().equals(password)) {
+
+                                            // Jika Akun sama dengan First Auth, tidak perlu verify
+                                            if (isSameWithFirstAuth()) {
+                                                loginSession.createLoginSession(dataUser);
+                                                if (rememberMeCheckbox.isChecked()) {
+                                                    rememberMeSession.createRememberMeSession();
+                                                }
+                                                Toast.makeText(getBaseContext(), "Berhasil Login!", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(getBaseContext(), DashboardActivity.class);
+                                                startActivity(intent);
+
+                                            }
+                                            // Jika Akun beda dengan First Auth, perlu verify
+                                            else {
+                                                Intent intent = new Intent(getBaseContext(), VerifyOtpActivity.class);
+                                                intent.putExtra("from", "login");
+                                                intent.putExtra("dataUser", dataUser);
+                                                if (rememberMeCheckbox.isChecked()) {
+                                                    intent.putExtra("isRememberMe", true);
+                                                } else {
+                                                    intent.putExtra("isRememberMe", false);
+                                                }
+                                                startActivity(intent);
+                                            }
+
+                                        }
+                                        // Jika Password tidak sesuai dengan DB
+                                        else {
+                                            tiPassword.setError("Password anda salah!");
+                                        }
+
+                                    }
+
+                                }
+
+                                // Jika nomor HP tidak ada di DB
+                                else {
+                                    tiNoHp.setError("Nomor handphone belum terdaftar!");
+                                }
+
+                            }
+                        });
+
+            }
+        }
+    }
+
+    private boolean isSameWithFirstAuth() {
+        if (mAuth.getCurrentUser() != null) {
+            if (Objects.equals(mAuth.getCurrentUser().getPhoneNumber(), noHp)) {
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
     @Override
     public void onClick(View v) {
         int btnId = v.getId();
         if (btnId == R.id.btn_login) {
-
+            validateNoHp();
         }
 
         if (btnId == R.id.btn_sudah_punya_akun) {
