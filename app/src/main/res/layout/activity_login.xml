@@ -110,13 +110,33 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <CheckBox
-                android:id="@+id/checkbox_rememberme"
-                android:layout_gravity="start"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Remember Me"/>
+                android:layout_marginEnd="16dp">
+
+                <CheckBox
+                    android:id="@+id/checkbox_rememberme"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Remember Me"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_lupapassword"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="lupa Password?"
+                    app:cornerRadius="16dp"
+                    android:textColor="@color/navy"
+                    />
+
+            </RelativeLayout>
+
+
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_login"

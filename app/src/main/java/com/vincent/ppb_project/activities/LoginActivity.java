@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity
 
     MaterialButton btnLogin;
     MaterialButton btnRegisterAtLogin;
+    MaterialButton btnLupaPassword;
     TextInputLayout tiNoHp;
     TextInputLayout tiPassword;
     String noHp;
@@ -48,6 +49,7 @@ public class LoginActivity extends AppCompatActivity
         // Hooks
         btnLogin = findViewById(R.id.btn_login);
         btnRegisterAtLogin = findViewById(R.id.btn_sudah_punya_akun);
+        btnLupaPassword = findViewById(R.id.btn_lupapassword);
         tiNoHp = findViewById(R.id.ti_noHp_login);
         tiPassword = findViewById(R.id.ti_password_login);
         rememberMeCheckbox = findViewById(R.id.checkbox_rememberme);
@@ -66,6 +68,7 @@ public class LoginActivity extends AppCompatActivity
 
         btnLogin.setOnClickListener(this);
         btnRegisterAtLogin.setOnClickListener(this);
+        btnLupaPassword.setOnClickListener(this);
     }
 
     private void setEditTextLoginSession() {
@@ -198,6 +201,11 @@ public class LoginActivity extends AppCompatActivity
 
         if (btnId == R.id.btn_sudah_punya_akun) {
             Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
+        }
+
+        if (btnId == R.id.btn_lupapassword) {
+            Intent intent = new Intent(this, ForgotPasswordActivity.class);
             startActivity(intent);
         }
     }

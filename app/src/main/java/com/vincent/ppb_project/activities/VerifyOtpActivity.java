@@ -83,6 +83,10 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
             noHp = dataUser.getNoHp();
             isRememberMe = getIntent().getBooleanExtra("isRememberMe", false);
         }
+        // Jika dari Frogot Password
+        else if (fromWhere.equals("forgotPassword")) {
+            noHp = getIntent().getStringExtra("noHp");
+        }
 
         // On Click
         btnVerify.setOnClickListener(this);
@@ -162,6 +166,13 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                             }
                             Intent intent = new Intent(this, DashboardActivity.class);
                             startActivity(intent);
+                            finish();
+                        }
+                        // Jika dari Forgot Password
+                        else if (fromWhere.equals("forgotPassword")) {
+                            Intent intent = new Intent(this, NewPasswordActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
 
                     } else {
@@ -184,6 +195,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                             loginSession.createLoginSession(dataUser);
                             Intent intent = new Intent(getBaseContext(), DashboardActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -192,8 +204,6 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                             Toast.makeText(getBaseContext(), "Register Failed!", Toast.LENGTH_SHORT).show();
                         }
                     });
-
-            finish();
         }
     }
 
