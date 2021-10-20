@@ -133,7 +133,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                     // Cek apakah ada email di DB
                     firestoreRoot.collection("users").whereEqualTo("email", email)
-                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            .addSnapshotListener(this, new EventListener<QuerySnapshot>() {
                                 @Override
                                 public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                                     if (error != null) {
@@ -189,7 +189,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                 // Cek apakah nomor HP sudah dipakai di DB
                 firestoreRoot.collection("users").whereEqualTo("noHp", noHp)
-                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        .addSnapshotListener(this, new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                                 if (error != null) {
@@ -275,7 +275,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             String uid = mAuth.getCurrentUser().getUid();
             UserModel dataUser = getDataUser();
             firestoreRoot.document("users/" + uid).set(dataUser)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             Toast.makeText(getBaseContext(), "Register Complete!", Toast.LENGTH_SHORT).show();
@@ -284,7 +284,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             startActivity(intent);
                         }
                     })
-                    .addOnFailureListener(new OnFailureListener() {
+                    .addOnFailureListener(this, new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(getBaseContext(), "Register Failed!", Toast.LENGTH_SHORT).show();

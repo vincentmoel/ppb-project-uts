@@ -188,7 +188,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         if (mAuth.getCurrentUser() != null) {
             String uid = mAuth.getCurrentUser().getUid();
             firestoreRoot.document("users/" + uid).set(dataUser)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             Toast.makeText(getBaseContext(), "Register Complete!", Toast.LENGTH_SHORT).show();
@@ -198,7 +198,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                             finish();
                         }
                     })
-                    .addOnFailureListener(new OnFailureListener() {
+                    .addOnFailureListener(this, new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(getBaseContext(), "Register Failed!", Toast.LENGTH_SHORT).show();

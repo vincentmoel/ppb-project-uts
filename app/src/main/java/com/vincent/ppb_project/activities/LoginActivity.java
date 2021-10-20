@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity
 
                 // Cek apakah nomor HP ada di DB
                 firestoreRoot.collection("users").whereEqualTo("noHp", noHp)
-                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        .addSnapshotListener(this, new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                                 if (error != null) {

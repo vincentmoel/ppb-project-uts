@@ -68,7 +68,7 @@ public class NewPasswordActivity extends AppCompatActivity implements View.OnCli
                     // Update password di DB
                     assert mAuth.getCurrentUser() != null;
                     firestoreRoot.document("users/" + mAuth.getCurrentUser().getUid()).update("password", newPassword)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
                                     Toast.makeText(getBaseContext(), "Update Password Berhasil!", Toast.LENGTH_SHORT).show();
@@ -77,7 +77,7 @@ public class NewPasswordActivity extends AppCompatActivity implements View.OnCli
                                     finish();
                                 }
                             })
-                            .addOnFailureListener(new OnFailureListener() {
+                            .addOnFailureListener(this, new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Toast.makeText(getBaseContext(), "Update Password Gagal!", Toast.LENGTH_SHORT).show();
