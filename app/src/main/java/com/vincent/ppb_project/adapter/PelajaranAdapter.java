@@ -89,39 +89,30 @@ public class PelajaranAdapter extends FirestoreRecyclerAdapter<PelajaranModel, P
         }
     }
 
+    private String convertToString(long waktu) {
+        String waktuString = String.valueOf(waktu);
+
+        // Menambahkan : waktuString
+        StringBuilder after = new StringBuilder(waktuString);
+        if (waktuString.length() == 3) {
+            after.insert(1, ":");
+        } else {
+            after.insert(2, ":");
+        }
+        return after.toString();
+    }
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onBindViewHolder(@NonNull PelajaranViewHolder holder, int position, @NonNull PelajaranModel model) {
         holder.getTvKelas().setText("Kelas " + model.getKelas());
         holder.getTvMateri().setText(model.getMateri());
 
-        String startAt = String.valueOf(model.getStart_at());
-        String finishAt = String.valueOf(model.getFinish_at());
-
-        // Menambahkan : ke Start At
-        StringBuilder sbStartAt = new StringBuilder(startAt);
-        if (startAt.length() == 3) {
-            sbStartAt.insert(1, ":");
-        } else {
-            sbStartAt.insert(2, ":");
-        }
-
-        // Menambahkan : ke Finish At
-        StringBuilder sbFinishAt = new StringBuilder(finishAt);
-        if (finishAt.length() == 3) {
-            sbFinishAt.insert(1, ":");
-        } else {
-            sbFinishAt.insert(2, ":");
-        }
-
-
-        holder.getTvWaktu().setText(model.getHari() + ", " + sbStartAt + " - " + sbFinishAt + " WIB");
+        holder.getTvWaktu().setText(model.getHari() + ", " + convertToString(model.getStart_at()) + " - " + convertToString(model.getFinish_at()) + " WIB");
         holder.getTvKuota().setText(String.valueOf(model.getKuota()));
-//        holder.getTvBentrokTitle().setVisibility(View.GONE);
-        holder.getTvBentrokTitle().setText(String.valueOf(dataCart.size()));
-        holder.getTvBentrokMateri().setVisibility(View.GONE);
 
-        holder.ivMinus.setVisibility(View.GONE);
+        holder.getTvBentrokTitle().setVisibility(View.GONE);
+        holder.getTvBentrokMateri().setVisibility(View.GONE);
 
         // On Item Click Callback
         holder.ivPlus.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +128,41 @@ public class PelajaranAdapter extends FirestoreRecyclerAdapter<PelajaranModel, P
                 onItemClickCallback.onItemDeleteFromCart(model);
             }
         });
+
+        // Logic Button
+        holder.ivMinus.setVisibility(View.GONE);
+
+        // Jika Kuota habis, plus hilang
+        if (model.getKuota() <= 0) {
+            holder.ivPlus.setVisibility(View.GONE);
+        }
+
+
+        for (CartModel cartModel : dataCart) {
+            // Jika Matpel sudah ada di cart, plus hilang, minus ada
+            if (model.getId().equals(cartModel.getId())) {
+                holder.ivPlus.setVisibility(View.GONE);
+                holder.ivMinus.setVisibility(View.VISIBLE);
+            }
+
+
+            // Bentrok Logic
+            if (cartModel.getHari().equals(model.getHari())) {
+                if (
+                        (model.getStart_at() >= cartModel.getStart_at() && model.getStart_at() <= cartModel.getFinish_at()) ||
+                        (model.getFinish_at() >= cartModel.getStart_at() && model.getFinish_at() <= cartModel.getFinish_at())
+                ) {
+                    holder.ivPlus.setVisibility(View.GONE);
+                    holder.getTvBentrokTitle().setVisibility(View.VISIBLE);
+                    holder.getTvBentrokMateri().setVisibility(View.VISIBLE);
+                    holder.getTvBentrokMateri().setText(cartModel.getMatpel() + " " + cartModel.getMateri() + " " + convertToString(cartModel.getStart_at()) + " - " + convertToString(cartModel.getFinish_at()) + " WIB");
+                }
+            }
+            // End Bentrok Logic
+
+        }
+        // End Logic Button
+
     }
 
     @NonNull

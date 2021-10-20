@@ -4,22 +4,42 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class CartModel implements Parcelable {
-    private String hari = "";
-    private long startAt = 0, finishAt = 0;
+    private String matpel = "",
+            materi = "",
+            kelas = "",
+            hari = "",
+            id = "";
 
-    public CartModel(String hari, long startAt, long finishAt) {
-        setStartAt(startAt);
-        setFinishAt(finishAt);
-        setHari(hari);
+    private long start_at = 0,
+            finish_at = 0,
+            kuota = 0,
+            created_at = 0;
+
+    public CartModel(PelajaranModel dataPelajaran, long currentTimeMillis) {
+        setMatpel(dataPelajaran.getMatpel());
+        setMateri(dataPelajaran.getMateri());
+        setKelas(dataPelajaran.getKelas());
+        setHari(dataPelajaran.getHari());
+        setId(dataPelajaran.getId());
+        setStart_at(dataPelajaran.getStart_at());
+        setFinish_at(dataPelajaran.getFinish_at());
+        setKuota(dataPelajaran.getKuota());
+        setCreated_at(currentTimeMillis);
     }
 
     public CartModel() {}
 
 
     protected CartModel(Parcel in) {
+        matpel = in.readString();
+        materi = in.readString();
+        kelas = in.readString();
         hari = in.readString();
-        startAt = in.readLong();
-        finishAt = in.readLong();
+        id = in.readString();
+        start_at = in.readLong();
+        finish_at = in.readLong();
+        kuota = in.readLong();
+        created_at = in.readLong();
     }
 
     public static final Creator<CartModel> CREATOR = new Creator<CartModel>() {
@@ -34,6 +54,54 @@ public class CartModel implements Parcelable {
         }
     };
 
+    public String getMatpel() {
+        return matpel;
+    }
+
+    public void setMatpel(String matpel) {
+        this.matpel = matpel;
+    }
+
+    public String getMateri() {
+        return materi;
+    }
+
+    public void setMateri(String materi) {
+        this.materi = materi;
+    }
+
+    public String getKelas() {
+        return kelas;
+    }
+
+    public void setKelas(String kelas) {
+        this.kelas = kelas;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public long getKuota() {
+        return kuota;
+    }
+
+    public void setKuota(long kuota) {
+        this.kuota = kuota;
+    }
+
+    public long getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(long created_at) {
+        this.created_at = created_at;
+    }
+
     public String getHari() {
         return hari;
     }
@@ -42,20 +110,20 @@ public class CartModel implements Parcelable {
         this.hari = hari;
     }
 
-    public long getStartAt() {
-        return startAt;
+    public long getStart_at() {
+        return start_at;
     }
 
-    public void setStartAt(long startAt) {
-        this.startAt = startAt;
+    public void setStart_at(long start_at) {
+        this.start_at = start_at;
     }
 
-    public long getFinishAt() {
-        return finishAt;
+    public long getFinish_at() {
+        return finish_at;
     }
 
-    public void setFinishAt(long finishAt) {
-        this.finishAt = finishAt;
+    public void setFinish_at(long finish_at) {
+        this.finish_at = finish_at;
     }
 
     @Override
@@ -65,8 +133,14 @@ public class CartModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(matpel);
+        dest.writeString(materi);
+        dest.writeString(kelas);
         dest.writeString(hari);
-        dest.writeLong(startAt);
-        dest.writeLong(finishAt);
+        dest.writeString(id);
+        dest.writeLong(start_at);
+        dest.writeLong(finish_at);
+        dest.writeLong(kuota);
+        dest.writeLong(created_at);
     }
 }

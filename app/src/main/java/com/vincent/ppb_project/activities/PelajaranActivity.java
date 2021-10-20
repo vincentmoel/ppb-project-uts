@@ -109,10 +109,6 @@ public class PelajaranActivity extends AppCompatActivity implements PelajaranAda
 
                             getAdapterListener.getAdapter(adapter);
                         }
-
-                        else {
-                            Toast.makeText(getBaseContext(), "NULL", Toast.LENGTH_SHORT).show();
-                        }
                     }
                 });
 
@@ -195,7 +191,7 @@ public class PelajaranActivity extends AppCompatActivity implements PelajaranAda
 
     @Override
     public void onItemAddToCart(PelajaranModel dataPelajaran) {
-        CartModel dataCart = new CartModel(dataPelajaran.getHari(), dataPelajaran.getStart_at(), dataPelajaran.getFinish_at());
+        CartModel dataCart = new CartModel(dataPelajaran, System.currentTimeMillis());
         firestoreRoot.document("carts/CART_" + uid + "/items/" + dataPelajaran.getId()).set(dataCart)
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                     @Override
