@@ -109,6 +109,14 @@ public class PelajaranActivity extends AppCompatActivity implements PelajaranAda
 
                             getAdapterListener.getAdapter(adapter);
                         }
+
+                        else {
+                            ArrayList<CartModel> dataCart = new ArrayList<>();
+                            adapter = new PelajaranAdapter(options, PelajaranActivity.this, dataCart);
+                            rv.setAdapter(adapter);
+
+                            getAdapterListener.getAdapter(adapter);
+                        }
                     }
                 });
 
