@@ -192,7 +192,7 @@ public class PelajaranActivity extends AppCompatActivity implements PelajaranAda
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(getBaseContext(), "Remove Success!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Delete Success!", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -11,9 +11,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.auth.User;
 import com.vincent.ppb_project.R;
@@ -27,7 +29,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ImageView ivMenu;
+    TextView tvNama;
+    View viewDrawer;
     RelativeLayout layoutMatematika, layoutFisika, layoutBiologi, layoutKimia;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         layoutFisika = findViewById(R.id.layout_fisika);
         layoutBiologi = findViewById(R.id.layout_biologi);
         layoutKimia = findViewById(R.id.layout_kimia);
+        fab = findViewById(R.id.fab);
+
 
         // Session
         loginSession = new SessionManager(this, SessionManager.LOGIN_SESSION);
@@ -61,10 +68,15 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         layoutFisika.setOnClickListener(this);
         layoutBiologi.setOnClickListener(this);
         layoutKimia.setOnClickListener(this);
+        fab.setOnClickListener(this);
     }
 
     private void setNavDrawer() {
+
         navigationView.bringToFront();
+        viewDrawer = navigationView.getHeaderView(0);
+        tvNama = viewDrawer.findViewById(R.id.tv_nama_navdrawer);
+        tvNama.setText(loginSession.getLoginSessionData().getFullname());
     }
 
     private void goToPelajaran(String from) {
@@ -101,6 +113,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         if (btnId == R.id.layout_kimia) {
             goToPelajaran("Kimia");
+        }
+
+        if (btnId == R.id.fab) {
+            Intent intent = new Intent(this, CartActivity.class);
+            startActivity(intent);
         }
     }
 }
