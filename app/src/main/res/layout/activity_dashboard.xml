@@ -15,6 +15,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/navdrawer_header"
+        app:itemTextAppearance="@style/NavigationDrawerStyle"
+        app:itemBackground="@drawable/navdrawer_background"
+        app:itemIconTint="@color/navy"
+        app:itemTextColor="@color/navy"
         app:menu="@menu/menu_drawer">
 
         <RelativeLayout
@@ -52,7 +56,8 @@
         <RelativeLayout
             android:id="@+id/layout_topBar_dashboard"
             android:layout_width="match_parent"
-            android:layout_height="70dp">
+            android:layout_height="70dp"
+            android:background="@color/navy">
 
             <ImageView
                 android:id="@+id/btn_menu_dashboard"
@@ -61,7 +66,18 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="16dp"
+                app:tint="@color/white"
                 android:src="@drawable/ic_baseline_menu_24" />
+
+            <ImageView
+                android:id="@+id/btn_close_dashboard"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                app:tint="@color/white"
+                android:src="@drawable/ic_baseline_close_24" />
 
 
         </RelativeLayout>
