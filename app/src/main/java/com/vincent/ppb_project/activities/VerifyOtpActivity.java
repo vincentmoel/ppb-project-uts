@@ -29,6 +29,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
 import com.vincent.ppb_project.R;
+import com.vincent.ppb_project.admin.AdminDashboardActivity;
 import com.vincent.ppb_project.model.UserModel;
 import com.vincent.ppb_project.session.SessionManager;
 
@@ -83,7 +84,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
             noHp = dataUser.getNoHp();
             isRememberMe = getIntent().getBooleanExtra("isRememberMe", false);
         }
-        // Jika dari Frogot Password
+        // Jika dari Forgot Password
         else if (fromWhere.equals("forgotPassword")) {
             noHp = getIntent().getStringExtra("noHp");
         }
@@ -164,8 +165,14 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                             if (isRememberMe) {
                                 rememberMeSession.createRememberMeSession();
                             }
-                            Intent intent = new Intent(this, DashboardActivity.class);
+                            Intent intent;
+                            if (dataUser.getRole().equals("user")) {
+                                intent = new Intent(this, DashboardActivity.class);
+                            } else {
+                                intent = new Intent(this, AdminDashboardActivity.class);
+                            }
                             startActivity(intent);
+
                             finish();
                         }
                         // Jika dari Forgot Password

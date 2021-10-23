@@ -44,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     FirebaseFirestore firestoreRoot;
     String fullname, kelas, namaKelas, absen, email, noHp, password;
     SessionManager loginSession;
+    String role = "user";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -295,7 +296,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private UserModel getDataUser() {
-        UserModel dataUser = new UserModel(fullname, kelas, namaKelas, absen, email, noHp, password, String.valueOf(System.currentTimeMillis()));
+        UserModel dataUser = new UserModel(fullname, kelas, namaKelas, absen, email, noHp, password, role, String.valueOf(System.currentTimeMillis()));
         return dataUser;
     }
 

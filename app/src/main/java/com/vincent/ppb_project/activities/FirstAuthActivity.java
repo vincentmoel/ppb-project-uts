@@ -67,6 +67,7 @@ public class FirstAuthActivity extends AppCompatActivity implements View.OnClick
                 intent.putExtra("noHp", noHp);
                 intent.putExtra("from", "firstAuth");
                 startActivity(intent);
+                finish();
             }
         }
     }

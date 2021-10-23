@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.vincent.ppb_project.R;
+import com.vincent.ppb_project.admin.AdminDashboardActivity;
 import com.vincent.ppb_project.session.SessionManager;
 
 public class SplashActivity extends AppCompatActivity {
@@ -19,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
     ImageView ivLogo;
     Animation logoAnim;
     FirebaseAuth mAuth;
-    SessionManager rememberMeSession;
+    SessionManager rememberMeSession, loginSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class SplashActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // Set Session
+        loginSession = new SessionManager(this, SessionManager.LOGIN_SESSION);
         rememberMeSession = new SessionManager(this, SessionManager.REMEMBERME_SESSION);
 
         Handler handler = new Handler();
@@ -49,9 +51,16 @@ public class SplashActivity extends AppCompatActivity {
                 } else {
                     // Jika Remember Me
                     if (rememberMeSession.isRememberedMe()) {
-                        Intent intent = new Intent(getBaseContext(), DashboardActivity.class);
-                        startActivity(intent);
+                        Intent intent;
+                        if (loginSession.getLoginSessionData().getRole().equals("user")) {
+                            intent = new Intent(getBaseContext(), DashboardActivity.class);
+                            startActivity(intent);
+                        } else {
+                            intent = new Intent(getBaseContext(), AdminDashboardActivity.class);
+                            startActivity(intent);
+                        }
                         finish();
+
                     } else {
                         Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                         startActivity(intent);

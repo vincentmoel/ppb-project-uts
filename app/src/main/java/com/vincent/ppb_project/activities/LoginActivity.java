@@ -20,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.vincent.ppb_project.R;
+import com.vincent.ppb_project.admin.AdminDashboardActivity;
 import com.vincent.ppb_project.model.UserModel;
 import com.vincent.ppb_project.session.SessionManager;
 
@@ -142,9 +143,16 @@ public class LoginActivity extends AppCompatActivity
                                                 if (rememberMeCheckbox.isChecked()) {
                                                     rememberMeSession.createRememberMeSession();
                                                 }
+
+                                                Intent intent;
+                                                if (dataUser.getRole().equals("user")) {
+                                                    intent = new Intent(getBaseContext(), DashboardActivity.class);
+                                                } else {
+                                                    intent = new Intent(getBaseContext(), AdminDashboardActivity.class);
+                                                }
                                                 Toast.makeText(getBaseContext(), "Berhasil Login!", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(getBaseContext(), DashboardActivity.class);
                                                 startActivity(intent);
+                                                finish();
 
                                             }
                                             // Jika Akun beda dengan First Auth, perlu verify

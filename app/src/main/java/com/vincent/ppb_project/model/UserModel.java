@@ -11,6 +11,7 @@ public class UserModel implements Parcelable {
             email = "",
             noHp = "",
             password = "",
+            role = "",
             tgl_register = "";
 
     public UserModel() {}
@@ -23,6 +24,7 @@ public class UserModel implements Parcelable {
             String email,
             String noHp,
             String password,
+            String role,
             String tgl_register
     ) {
         setFullname(fullname);
@@ -32,10 +34,17 @@ public class UserModel implements Parcelable {
         setEmail(email);
         setNoHp(noHp);
         setPassword(password);
+        setRole(role);
         setTgl_register(tgl_register);
     }
 
+    public String getRole() {
+        return role;
+    }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     protected UserModel(Parcel in) {
         fullname = in.readString();
@@ -46,6 +55,7 @@ public class UserModel implements Parcelable {
         noHp = in.readString();
         password = in.readString();
         tgl_register = in.readString();
+        role = in.readString();
     }
 
     public static final Creator<UserModel> CREATOR = new Creator<UserModel>() {
@@ -139,5 +149,6 @@ public class UserModel implements Parcelable {
         dest.writeString(noHp);
         dest.writeString(password);
         dest.writeString(tgl_register);
+        dest.writeString(role);
     }
 }

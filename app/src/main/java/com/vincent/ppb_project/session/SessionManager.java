@@ -20,6 +20,7 @@ public class SessionManager {
     public static String KEY_EMAIL = "email";
     public static String KEY_NOHP = "noHp";
     public static String KEY_PASSWORD = "password";
+    public static String KEY_ROLE = "role";
     public static String KEY_TGL_REGISTER = "tgl_register";
 
     private static String IS_LOGGED_IN = "isLoggedIn";
@@ -41,6 +42,7 @@ public class SessionManager {
         editor.putString(KEY_EMAIL, dataUser.getEmail());
         editor.putString(KEY_NOHP, dataUser.getNoHp());
         editor.putString(KEY_PASSWORD, dataUser.getPassword());
+        editor.putString(KEY_ROLE, dataUser.getRole());
         editor.putString(KEY_TGL_REGISTER, dataUser.getTgl_register());
         editor.apply();
     }
@@ -54,6 +56,7 @@ public class SessionManager {
         dataUser.setEmail(myPref.getString(KEY_EMAIL, ""));
         dataUser.setNoHp(myPref.getString(KEY_NOHP, ""));
         dataUser.setPassword(myPref.getString(KEY_PASSWORD, ""));
+        dataUser.setRole(myPref.getString(KEY_ROLE, "user"));
         dataUser.setTgl_register(myPref.getString(KEY_TGL_REGISTER, ""));
         return dataUser;
     }
