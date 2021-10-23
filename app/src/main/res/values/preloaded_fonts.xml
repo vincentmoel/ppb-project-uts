@@ -2,6 +2,11 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/pattaya</item>
+        <item>@font/playfair_display</item>
+        <item>@font/quicksand</item>
+        <item>@font/quicksand_bold</item>
+        <item>@font/quicksand_light</item>
+        <item>@font/quicksand_medium</item>
         <item>@font/tauri</item>
     </array>
 </resources>

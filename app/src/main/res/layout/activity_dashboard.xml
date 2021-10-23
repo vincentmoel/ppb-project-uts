@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
     tools:context=".activities.DashboardActivity">
 
     <com.google.android.material.navigation.NavigationView
@@ -17,11 +16,9 @@
         app:headerLayout="@layout/navdrawer_header"
         app:itemTextAppearance="@style/NavigationDrawerStyle"
         app:itemBackground="@drawable/navdrawer_background"
-        app:itemIconTint="@color/navy"
-        app:itemTextColor="@color/navy"
         app:menu="@menu/menu_drawer">
 
-        <RelativeLayout
+         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -47,17 +44,16 @@
     </com.google.android.material.navigation.NavigationView>
 
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
+        android:layout_height="wrap_content">
 
         <RelativeLayout
+            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/layout_topBar_dashboard"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@color/navy">
+            android:layout_height="60dp"
+            android:background="@drawable/gradient_navy_background">
 
             <ImageView
                 android:id="@+id/btn_menu_dashboard"
@@ -83,6 +79,7 @@
         </RelativeLayout>
 
         <ScrollView
+            app:layout_constraintTop_toBottomOf="@id/layout_topBar_dashboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -260,7 +257,7 @@
 
         </ScrollView>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
