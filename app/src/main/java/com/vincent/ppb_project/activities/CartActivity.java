@@ -45,6 +45,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
 
         Query query = firestoreRoot.collection("carts/CART_" + mAuth.getCurrentUser().getUid() + "/items");
         FirestoreRecyclerOptions<CartModel> options = new FirestoreRecyclerOptions.Builder<CartModel>()
+                .setLifecycleOwner(this)
                 .setQuery(query, CartModel.class)
                 .build();
 

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    android:id="@+id/drawer_layout_admin"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,12 +9,12 @@
     tools:context=".admin.AdminDashboardActivity">
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigation_view"
+        android:id="@+id/navigation_view_admin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/navdrawer_header"
-        app:itemBackground="@drawable/navdrawer_background"
+        app:headerLayout="@layout/navdrawer_header_admin"
+        app:itemBackground="@drawable/navdrawer_background_admin"
         app:itemTextAppearance="@style/NavigationDrawerStyle"
         app:menu="@menu/menu_drawer">
 
@@ -21,13 +23,14 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_logout"
+                android:id="@+id/btn_logout_admin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="16dp"
                 android:text="logout"
+                android:backgroundTint="@color/softOrange"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:cornerRadius="16dp"
@@ -101,6 +104,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/tv_time_admin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -137,7 +141,7 @@
                     app:layout_constraintLeft_toLeftOf="@id/layout_registeredstudents_admin"
                     app:layout_constraintRight_toRightOf="@id/layout_registeredstudents_admin"
                     app:layout_constraintTop_toTopOf="@id/layout_registeredstudents_admin"
-                    tools:text="Registered Students" />
+                    android:text="Registered Students" />
 
                 <TextView
                     android:id="@+id/tv_total_students"
@@ -177,7 +181,7 @@
                     app:layout_constraintLeft_toLeftOf="@id/layout_registeredlessons_admin"
                     app:layout_constraintRight_toRightOf="@id/layout_registeredlessons_admin"
                     app:layout_constraintTop_toTopOf="@id/layout_registeredlessons_admin"
-                    tools:text="Registered Lessons" />
+                    android:text="Registered Lessons" />
 
                 <TextView
                     android:id="@+id/tv_total_lessons"
@@ -206,6 +210,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layput_colored" />
 
+
                 <androidx.core.widget.NestedScrollView
                     android:id="@+id/nested_scrollview"
                     app:layout_constraintTop_toBottomOf="@id/tv_title_today_lessons"
@@ -219,7 +224,7 @@
                         android:id="@+id/rv_today_lessons"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:listitem="@layout/item_row_cart"/>
+                        tools:listitem="@layout/item_row_todaylessons_admin"/>
 
 
                 </androidx.core.widget.NestedScrollView>

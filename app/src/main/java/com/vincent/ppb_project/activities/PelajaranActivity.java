@@ -41,7 +41,6 @@ public class PelajaranActivity extends AppCompatActivity implements PelajaranAda
     SessionManager loginSession;
     PelajaranAdapter adapter;
     String uid;
-    GetAdapter getAdapterListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +83,7 @@ public class PelajaranActivity extends AppCompatActivity implements PelajaranAda
                 .whereEqualTo("kelas", kelas);
 
         FirestoreRecyclerOptions<PelajaranModel> options = new FirestoreRecyclerOptions.Builder<PelajaranModel>()
+                .setLifecycleOwner(this)
                 .setQuery(query, PelajaranModel.class)
                 .build();
 
@@ -107,7 +107,6 @@ public class PelajaranActivity extends AppCompatActivity implements PelajaranAda
                             adapter = new PelajaranAdapter(options, PelajaranActivity.this, dataCart);
                             rv.setAdapter(adapter);
 
-                            getAdapterListener.getAdapter(adapter);
                         }
 
                         else {
@@ -115,7 +114,6 @@ public class PelajaranActivity extends AppCompatActivity implements PelajaranAda
                             adapter = new PelajaranAdapter(options, PelajaranActivity.this, dataCart);
                             rv.setAdapter(adapter);
 
-                            getAdapterListener.getAdapter(adapter);
                         }
                     }
                 });
@@ -123,29 +121,6 @@ public class PelajaranActivity extends AppCompatActivity implements PelajaranAda
 
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setGetAdapter(new GetAdapter() {
-            @Override
-            public void getAdapter(PelajaranAdapter adapter) {
-                adapter.startListening();
-
-            }
-        });
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        setGetAdapter(new GetAdapter() {
-            @Override
-            public void getAdapter(PelajaranAdapter adapter) {
-                adapter.stopListening();
-            }
-        });
-    }
 
     private void removeKuota(String idPelajaran) {
 
@@ -232,11 +207,4 @@ public class PelajaranActivity extends AppCompatActivity implements PelajaranAda
                 });
     }
 
-    public interface GetAdapter {
-        void getAdapter(PelajaranAdapter adapter);
-    }
-
-    private void setGetAdapter(GetAdapter getAdapterListener) {
-        this.getAdapterListener = getAdapterListener;
-    }
 }

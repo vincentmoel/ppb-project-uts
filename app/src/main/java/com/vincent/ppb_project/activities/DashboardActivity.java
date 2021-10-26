@@ -137,6 +137,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             rememberMeSession.clearRememberMeSession();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            finish();
         }
 
         if (btnId == R.id.btn_close_dashboard) {
