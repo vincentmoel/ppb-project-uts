@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ppbproject">
-        <activity android:name=".admin.AdminDashboardActivity"></activity>
+        <activity android:name=".admin.SearchLessonsActivity"></activity>
+        <activity android:name=".admin.AdminDashboardActivity" />
         <activity android:name=".activities.CartActivity" />
         <activity android:name=".activities.PelajaranActivity" />
         <activity android:name=".activities.NewPasswordActivity" />

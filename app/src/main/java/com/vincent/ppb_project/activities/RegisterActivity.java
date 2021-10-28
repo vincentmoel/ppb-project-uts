@@ -18,10 +18,13 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Transaction;
 import com.google.firebase.firestore.auth.User;
 import com.vincent.ppb_project.R;
 import com.vincent.ppb_project.data.DataKelas;
@@ -281,8 +284,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         public void onSuccess(Void unused) {
                             Toast.makeText(getBaseContext(), "Register Complete!", Toast.LENGTH_SHORT).show();
                             loginSession.createLoginSession(dataUser);
+                            addUserToStats();
                             Intent intent = new Intent(getBaseContext(), DashboardActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                     })
                     .addOnFailureListener(this, new OnFailureListener() {
@@ -293,6 +298,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     });
         }
 
+    }
+
+    private void addUserToStats() {
+        firestoreRoot.runTransaction(new Transaction.Function<Void>() {
+            @Nullable
+            @org.jetbrains.annotations.Nullable
+            @Override
+            public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                DocumentReference docRef = firestoreRoot.document("stats/qty");
+                DocumentSnapshot dataSnapshot = transaction.get(docRef);
+                // Logic
+                long newStat = dataSnapshot.getLong("user") + 1;
+                transaction.update(docRef, "user", newStat);
+                return null;
+            }
+        });
     }
 
     private UserModel getDataUser() {

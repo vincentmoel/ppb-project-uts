@@ -1,6 +1,7 @@
 package com.vincent.ppb_project.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -26,7 +27,11 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Transaction;
 import com.google.firebase.firestore.auth.User;
 import com.vincent.ppb_project.R;
 import com.vincent.ppb_project.admin.AdminDashboardActivity;
@@ -200,6 +205,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                         public void onSuccess(Void unused) {
                             Toast.makeText(getBaseContext(), "Register Complete!", Toast.LENGTH_SHORT).show();
                             loginSession.createLoginSession(dataUser);
+                            addUserToStats();
                             Intent intent = new Intent(getBaseContext(), DashboardActivity.class);
                             startActivity(intent);
                             finish();
@@ -212,6 +218,22 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                         }
                     });
         }
+    }
+
+    private void addUserToStats() {
+        firestoreRoot.runTransaction(new Transaction.Function<Void>() {
+            @Nullable
+            @org.jetbrains.annotations.Nullable
+            @Override
+            public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                DocumentReference docRef = firestoreRoot.document("stats/qty");
+                DocumentSnapshot dataSnapshot = transaction.get(docRef);
+                // Logic
+                long newStat = dataSnapshot.getLong("user") + 1;
+                transaction.update(docRef, "user", newStat);
+                return null;
+            }
+        });
     }
 
     @Override

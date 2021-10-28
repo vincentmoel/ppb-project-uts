@@ -13,10 +13,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
@@ -26,7 +24,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.vincent.ppb_project.R;
-import com.vincent.ppb_project.activities.CartActivity;
 import com.vincent.ppb_project.activities.LoginActivity;
 import com.vincent.ppb_project.adapter.TodayLessonsAdapter;
 import com.vincent.ppb_project.model.PelajaranModel;
@@ -73,22 +70,41 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         loginSession = new SessionManager(this, SessionManager.LOGIN_SESSION);
         rememberMeSession = new SessionManager(this, SessionManager.REMEMBERME_SESSION);
 
-        setNavDrawer();
         setAdminArea();
         setInitialTodayLessons();
-
 
 
         btnMenu.setOnClickListener(this);
         btnLogout.setOnClickListener(this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setNavDrawer();
+    }
+
+    private ArrayList<String> generateKeywords(String materi) {
+        String text = materi.toLowerCase().trim();
+        ArrayList<String> key = new ArrayList<>();
+        for (int i = 0; i < text.length(); i++) {
+            for (int j = i; j < text.length(); j++) {
+                key.add(text.substring(i, j+1));
+            }
+        }
+        return key;
+    }
+
     private void setInitialTodayLessons() {
         listPelajaran.clear();
         rvTodayLessons.setLayoutManager(new LinearLayoutManager(this));
 
-        firestoreRoot.collection("pelajaran").whereEqualTo("hari", getCurrentHari())
-                .limit(3).get()
+        firestoreRoot.collection("pelajaran")
+                .orderBy("kelas", Query.Direction.ASCENDING)
+                .orderBy("start_at", Query.Direction.ASCENDING)
+                .whereEqualTo("hari", getCurrentHari())
+                .limit(3)
+                .get()
                 .addOnSuccessListener(this, new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -107,7 +123,10 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
     }
 
     private void setTodayLessons() {
-        Query query = firestoreRoot.collection("pelajaran").whereEqualTo("hari", getCurrentHari())
+        Query query = firestoreRoot.collection("pelajaran")
+                .orderBy("kelas", Query.Direction.ASCENDING)
+                .orderBy("start_at", Query.Direction.ASCENDING)
+                .whereEqualTo("hari", getCurrentHari())
                 .startAfter(lastVisible)
                 .limit(3);
 
@@ -186,7 +205,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.menu_my_schedule) {
                     navigationView.setCheckedItem(item);
-                    startActivity(new Intent(getBaseContext(), CartActivity.class));
+                    startActivity(new Intent(getBaseContext(), SearchLessonsActivity.class));
                 }
 
                 return true;

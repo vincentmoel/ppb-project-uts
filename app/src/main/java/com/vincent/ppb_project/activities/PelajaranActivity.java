@@ -79,6 +79,7 @@ public class PelajaranActivity extends AppCompatActivity implements PelajaranAda
         String kelas = loginSession.getLoginSessionData().getKelas();
 
         Query query = firestoreRoot.collection("pelajaran")
+                .orderBy("start_at", Query.Direction.ASCENDING)
                 .whereEqualTo("matpel", matpel)
                 .whereEqualTo("kelas", kelas);
 
@@ -126,6 +127,7 @@ public class PelajaranActivity extends AppCompatActivity implements PelajaranAda
 
         firestoreRoot.runTransaction(new Transaction.Function<Void>() {
             @Nullable
+            @org.jetbrains.annotations.Nullable
             @Override
             public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
                 DocumentReference docRef = firestoreRoot.document("pelajaran/" + idPelajaran);
@@ -152,6 +154,7 @@ public class PelajaranActivity extends AppCompatActivity implements PelajaranAda
 
         firestoreRoot.runTransaction(new Transaction.Function<Void>() {
             @Nullable
+            @org.jetbrains.annotations.Nullable
             @Override
             public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
                 DocumentReference docRef = firestoreRoot.document("pelajaran/" + idPelajaran);

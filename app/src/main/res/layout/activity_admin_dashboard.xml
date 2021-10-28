@@ -6,7 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".admin.AdminDashboardActivity">
+    tools:context=".admin.AdminDashboardActivity"
+    tools:openDrawer="start">
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view_admin"
@@ -16,7 +17,7 @@
         app:headerLayout="@layout/navdrawer_header_admin"
         app:itemBackground="@drawable/navdrawer_background_admin"
         app:itemTextAppearance="@style/NavigationDrawerStyle"
-        app:menu="@menu/menu_drawer">
+        app:menu="@menu/menu_drawer_admin">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -218,7 +219,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp">
+                    android:layout_height="300dp">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_today_lessons"
