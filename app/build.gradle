@@ -8,7 +8,7 @@ android {
     buildToolsVersion "30.0.0"
 
     defaultConfig {
-        applicationId "com.vincent.ppb_project"
+        applicationId "com.ptm.ppb_project"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
