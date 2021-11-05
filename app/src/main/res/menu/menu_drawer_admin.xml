@@ -7,8 +7,9 @@
         android:title="Home"
         android:checkable="true"/>
 
+
     <item
-        android:id="@+id/menu_my_schedule"
+        android:id="@+id/menu_lessons"
         android:icon="@drawable/ic_baseline_menu_book_24"
         android:title="Lessons"
         android:checkable="true"/>

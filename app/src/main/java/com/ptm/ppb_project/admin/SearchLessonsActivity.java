@@ -2,18 +2,22 @@ package com.ptm.ppb_project.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.ptm.ppb_project.R;
 
-public class SearchLessonsActivity extends AppCompatActivity {
+public class SearchLessonsActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextInputLayout tiSearch;
+    FloatingActionButton fabAddLessons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,10 @@ public class SearchLessonsActivity extends AppCompatActivity {
 
         // Hooks
         tiSearch = findViewById(R.id.ti_searchLessons);
+        fabAddLessons = findViewById(R.id.fab_add_lessons);
+
+        // On Click
+        fabAddLessons.setOnClickListener(this);
 
         tiSearch.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -36,5 +44,14 @@ public class SearchLessonsActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        int btnId = v.getId();
+
+        if (btnId == R.id.fab_add_lessons) {
+            startActivity(new Intent(this, AddLessonsActivity.class));
+        }
     }
 }

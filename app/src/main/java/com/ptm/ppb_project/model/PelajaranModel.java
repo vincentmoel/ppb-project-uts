@@ -29,14 +29,15 @@ public class PelajaranModel implements Parcelable {
             long kuota,
             ArrayList<String> slug
     ) {
-      setMatpel(matpel);
-      setMateri(materi);
-      setKelas(kelas);
-      setHari(hari);
-      setStart_at(start_at);
-      setFinish_at(finish_at);
-      setKuota(kuota);
-      setSlug(slug);
+        setId(id);
+          setMatpel(matpel);
+          setMateri(materi);
+          setKelas(kelas);
+          setHari(hari);
+          setStart_at(start_at);
+          setFinish_at(finish_at);
+          setKuota(kuota);
+          setSlug(slug);
     }
 
     public PelajaranModel() {};

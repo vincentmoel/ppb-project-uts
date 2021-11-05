@@ -8,7 +8,6 @@
     tools:context=".admin.SearchLessonsActivity">
 
 
-
     <RelativeLayout
         android:id="@+id/layout_topBar_searchLessons"
         app:layout_constraintTop_toTopOf="parent"
@@ -90,7 +89,7 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/fab_add_lessons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fabSize="normal"

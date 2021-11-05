@@ -59,8 +59,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         loginSession = new SessionManager(this, SessionManager.LOGIN_SESSION);
         rememberMeSession = new SessionManager(this, SessionManager.REMEMBERME_SESSION);
 
-        // Set Navigation Drawer
-        setNavDrawer();
+
 
         // On Click
         btnLogout.setOnClickListener(this);
@@ -71,6 +70,13 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         layoutBiologi.setOnClickListener(this);
         layoutKimia.setOnClickListener(this);
         fab.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Set Navigation Drawer
+        setNavDrawer();
     }
 
     private void setNavDrawer() {

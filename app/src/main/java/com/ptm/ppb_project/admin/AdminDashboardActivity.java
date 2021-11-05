@@ -84,16 +84,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         setNavDrawer();
     }
 
-    private ArrayList<String> generateKeywords(String materi) {
-        String text = materi.toLowerCase().trim();
-        ArrayList<String> key = new ArrayList<>();
-        for (int i = 0; i < text.length(); i++) {
-            for (int j = i; j < text.length(); j++) {
-                key.add(text.substring(i, j+1));
-            }
-        }
-        return key;
-    }
+
 
     private void setInitialTodayLessons() {
         listPelajaran.clear();
@@ -203,7 +194,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.menu_my_schedule) {
+                if (item.getItemId() == R.id.menu_lessons) {
                     navigationView.setCheckedItem(item);
                     startActivity(new Intent(getBaseContext(), SearchLessonsActivity.class));
                 }

@@ -12,18 +12,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ppbproject">
-        <activity android:name="com.ptm.ppb_project.admin.SearchLessonsActivity"></activity>
-        <activity android:name="com.ptm.ppb_project.admin.AdminDashboardActivity" />
-        <activity android:name="com.ptm.ppb_project.activities.CartActivity" />
-        <activity android:name="com.ptm.ppb_project.activities.PelajaranActivity" />
-        <activity android:name="com.ptm.ppb_project.activities.NewPasswordActivity" />
-        <activity android:name="com.ptm.ppb_project.activities.ForgotPasswordActivity" />
-        <activity android:name="com.ptm.ppb_project.activities.DashboardActivity" />
-        <activity android:name="com.ptm.ppb_project.activities.VerifyOtpActivity" />
-        <activity android:name="com.ptm.ppb_project.activities.LoginActivity" />
-        <activity android:name="com.ptm.ppb_project.activities.FirstAuthActivity" />
-        <activity android:name="com.ptm.ppb_project.activities.RegisterActivity" />
-        <activity android:name="com.ptm.ppb_project.activities.SplashActivity">
+        <activity android:name=".admin.AddLessonsActivity"></activity>
+        <activity android:name=".admin.SearchLessonsActivity" />
+        <activity android:name=".admin.AdminDashboardActivity" />
+        <activity android:name=".activities.CartActivity" />
+        <activity android:name=".activities.PelajaranActivity" />
+        <activity android:name=".activities.NewPasswordActivity" />
+        <activity android:name=".activities.ForgotPasswordActivity" />
+        <activity android:name=".activities.DashboardActivity" />
+        <activity android:name=".activities.VerifyOtpActivity" />
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.FirstAuthActivity" />
+        <activity android:name=".activities.RegisterActivity" />
+        <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

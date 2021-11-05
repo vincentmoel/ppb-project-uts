@@ -96,10 +96,4 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(this, DashboardActivity.class));
-        finish();
-    }
 }
