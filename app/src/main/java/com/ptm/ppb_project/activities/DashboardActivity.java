@@ -59,9 +59,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         loginSession = new SessionManager(this, SessionManager.LOGIN_SESSION);
         rememberMeSession = new SessionManager(this, SessionManager.REMEMBERME_SESSION);
 
-        UserModel dataUser = loginSession.getLoginSessionData();
-        Toast.makeText(this, dataUser.getNoHp(), Toast.LENGTH_SHORT).show();
-
         // Set Navigation Drawer
         setNavDrawer();
 

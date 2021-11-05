@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ptm.ppb_project.R;
@@ -29,6 +30,9 @@ public class SplashActivity extends AppCompatActivity {
 
         // Hooks
         ivLogo = findViewById(R.id.iv_logo_splash);
+        Glide.with(this)
+                .load(R.drawable.tt)
+                .into(ivLogo);
         logoAnim = AnimationUtils.loadAnimation(this, R.anim.fade_in_anim);
         ivLogo.setAnimation(logoAnim);
 

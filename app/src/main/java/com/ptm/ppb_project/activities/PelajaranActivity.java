@@ -6,7 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -29,8 +32,9 @@ import com.ptm.ppb_project.session.SessionManager;
 
 import java.util.ArrayList;
 
-public class PelajaranActivity extends AppCompatActivity implements PelajaranAdapter.OnItemClickCallback {
+public class PelajaranActivity extends AppCompatActivity implements PelajaranAdapter.OnItemClickCallback, View.OnClickListener {
 
+    ImageView ivBack;
     RecyclerView rv;
     FirebaseFirestore firestoreRoot;
     FirebaseAuth mAuth;
@@ -44,6 +48,7 @@ public class PelajaranActivity extends AppCompatActivity implements PelajaranAda
         setContentView(R.layout.activity_pelajaran);
 
         // Hooks
+        ivBack = findViewById(R.id.btn_back_pelajaran);
         rv = findViewById(R.id.rv_pelajaran);
 
         // Set Firebase
@@ -51,6 +56,9 @@ public class PelajaranActivity extends AppCompatActivity implements PelajaranAda
         mAuth = FirebaseAuth.getInstance();
         assert  mAuth.getCurrentUser() != null;
         uid = mAuth.getCurrentUser().getUid();
+
+        // On Click
+        ivBack.setOnClickListener(this);
 
         // Set Session
         loginSession = new SessionManager(this, SessionManager.LOGIN_SESSION);
@@ -206,4 +214,13 @@ public class PelajaranActivity extends AppCompatActivity implements PelajaranAda
                 });
     }
 
+    @Override
+    public void onClick(View v) {
+        int btnId = v.getId();
+
+        if (btnId == R.id.btn_back_pelajaran) {
+            startActivity(new Intent(this, DashboardActivity.class));
+            finish();
+        }
+    }
 }

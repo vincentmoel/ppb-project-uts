@@ -3,13 +3,16 @@ package com.ptm.ppb_project.activities;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,6 +34,7 @@ public class LoginActivity extends AppCompatActivity
     MaterialButton btnLogin;
     MaterialButton btnRegisterAtLogin;
     MaterialButton btnLupaPassword;
+    ImageView ivCloseLogin;
     TextInputLayout tiNoHp;
     TextInputLayout tiPassword;
     String noHp;
@@ -47,6 +51,7 @@ public class LoginActivity extends AppCompatActivity
 
         // Hooks
         btnLogin = findViewById(R.id.btn_login);
+        ivCloseLogin = findViewById(R.id.btn_close_login);
         btnRegisterAtLogin = findViewById(R.id.btn_sudah_punya_akun);
         btnLupaPassword = findViewById(R.id.btn_lupapassword);
         tiNoHp = findViewById(R.id.ti_noHp_login);
@@ -61,13 +66,12 @@ public class LoginActivity extends AppCompatActivity
         loginSession = new SessionManager(this, SessionManager.LOGIN_SESSION);
         rememberMeSession = new SessionManager(this, SessionManager.REMEMBERME_SESSION);
 
-        Toast.makeText(this, FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber(), Toast.LENGTH_SHORT).show();
-
         setEditTextLoginSession();
 
         btnLogin.setOnClickListener(this);
         btnRegisterAtLogin.setOnClickListener(this);
         btnLupaPassword.setOnClickListener(this);
+        ivCloseLogin.setOnClickListener(this);
     }
 
     private void setEditTextLoginSession() {
@@ -214,6 +218,22 @@ public class LoginActivity extends AppCompatActivity
         if (btnId == R.id.btn_lupapassword) {
             Intent intent = new Intent(this, ForgotPasswordActivity.class);
             startActivity(intent);
+        }
+
+        if (btnId == R.id.btn_close_login) {
+            MaterialAlertDialogBuilder alertDialog = new MaterialAlertDialogBuilder(this)
+                    .setTitle("Close Application")
+                    .setCancelable(true)
+                    .setMessage("Apakah anda yakin ingin keluar?")
+                    .setIcon(R.drawable.ic_baseline_directions_run_24)
+                    .setNegativeButton("Cancel", null)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finishAffinity();
+                        }
+                    });
+            alertDialog.show();
         }
     }
 

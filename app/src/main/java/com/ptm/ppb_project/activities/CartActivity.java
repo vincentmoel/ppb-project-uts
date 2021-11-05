@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -18,12 +21,13 @@ import com.ptm.ppb_project.R;
 import com.ptm.ppb_project.adapter.CartAdapter;
 import com.ptm.ppb_project.model.CartModel;
 
-public class CartActivity extends AppCompatActivity implements CartAdapter.OnItemClickCallback {
+public class CartActivity extends AppCompatActivity implements CartAdapter.OnItemClickCallback, View.OnClickListener {
 
     RecyclerView rvCart;
     FirebaseAuth mAuth;
     FirebaseFirestore firestoreRoot;
     CartAdapter adapter;
+    ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +36,14 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
 
         // Hooks
         rvCart = findViewById(R.id.rv_cart);
+        ivBack = findViewById(R.id.btn_back_cart);
 
         // Set Firebase
         mAuth = FirebaseAuth.getInstance();
         firestoreRoot = FirebaseFirestore.getInstance();
+
+        // On Click
+        ivBack.setOnClickListener(this);
 
         setCartAdapter();
     }
@@ -76,5 +84,22 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
     protected void onStart() {
         super.onStart();
         adapter.startListening();
+    }
+
+    @Override
+    public void onClick(View v) {
+        int btnId = v.getId();
+
+        if (btnId == R.id.btn_back_cart) {
+            startActivity(new Intent(this, DashboardActivity.class));
+            finish();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, DashboardActivity.class));
+        finish();
     }
 }
