@@ -59,7 +59,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                android:fontFamily="@font/tauri"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="Booking Sekolah Tatap Muka"
                 android:textSize="24sp"/>
 
@@ -69,7 +69,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:fontFamily="@font/tauri"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="Login Akun"
                 android:textStyle="bold"
                 android:textSize="18sp"/>
@@ -121,6 +121,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_medium"
                     android:text="Remember Me"/>
 
                 <com.google.android.material.button.MaterialButton
@@ -130,6 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="lupa Password?"
+                    android:fontFamily="@font/quicksand_bold"
                     app:cornerRadius="16dp"
                     android:textColor="@color/navy"
                     />
@@ -147,7 +149,7 @@
                 android:layout_marginEnd="16dp"
                 android:text="Login"
                 android:textColor="@color/white"
-                android:fontFamily="@font/tauri"
+                android:fontFamily="@font/quicksand_bold"
                 app:cornerRadius="16dp"/>
 
             <com.google.android.material.button.MaterialButton
@@ -158,7 +160,7 @@
                 android:layout_marginEnd="16dp"
                 android:text="Belum punya akun? register"
                 android:textColor="@color/white"
-                android:fontFamily="@font/tauri"
+                android:fontFamily="@font/quicksand_bold"
                 android:backgroundTint="@color/softOrange"
                 app:cornerRadius="16dp"/>
 

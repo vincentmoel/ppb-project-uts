@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity
             String noHpAwal = tiNoHp.getEditText().getText().toString();
             if (noHpAwal.isEmpty()) {
                 tiNoHp.setError("Nomor Handphone tidak boleh kosong!");
-                validatePassword();
+                tiPassword.setError(null);
             } else {
                 String firstDigit = String.valueOf(noHpAwal.charAt(0));
                 if (firstDigit.equals("0")) {
@@ -179,6 +179,7 @@ public class LoginActivity extends AppCompatActivity
                                 // Jika nomor HP tidak ada di DB
                                 else {
                                     tiNoHp.setError("Nomor handphone belum terdaftar!");
+                                    tiPassword.setError(null);
                                 }
 
                             }

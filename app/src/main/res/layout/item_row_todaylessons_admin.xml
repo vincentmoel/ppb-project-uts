@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 tools:text="Matematika Kelas 10"
                 android:textSize="16sp"
-                android:fontFamily="@font/tauri"/>
+                android:fontFamily="@font/quicksand_medium"/>
 
             <TextView
                 android:id="@+id/tv_materi_today"
@@ -45,7 +45,7 @@
                 android:textSize="21sp"
                 android:textStyle="bold"
                 android:layout_marginTop="8dp"
-                android:fontFamily="@font/tauri"/>
+                android:fontFamily="@font/quicksand_medium"/>
 
             <TextView
                 android:id="@+id/tv_waktu_today"
@@ -54,7 +54,7 @@
                 tools:text="Senin, 7:00 - 9:00 WIB"
                 android:textSize="16sp"
                 android:layout_marginTop="8dp"
-                android:fontFamily="@font/tauri"/>
+                android:fontFamily="@font/quicksand_medium"/>
 
         </LinearLayout>
 

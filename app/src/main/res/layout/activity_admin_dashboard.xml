@@ -31,6 +31,7 @@
                 android:layout_centerVertical="true"
                 android:layout_margin="16dp"
                 android:text="logout"
+                android:fontFamily="@font/quicksand_bold"
                 android:backgroundTint="@color/softOrange"
                 android:textColor="@color/white"
                 android:textSize="18sp"

@@ -16,7 +16,7 @@
 
 
     <style name="NavigationDrawerStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/tauri</item>
+        <item name="android:fontFamily">@font/quicksand_medium</item>
         <item name="android:textSize">16sp</item>
     </style>
 

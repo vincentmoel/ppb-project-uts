@@ -50,7 +50,7 @@
             android:layout_margin="16dp"
             android:text="Verifikasi Kode OTP"
             android:gravity="center"
-            android:fontFamily="@font/tauri"
+            android:fontFamily="@font/quicksand_bold"
             android:textSize="30sp"/>
 
         <TextView
@@ -60,7 +60,7 @@
             android:layout_marginStart="16dp"
             android:text="Kode OTP dikirimkan ke nomor handphone : "
             android:gravity="center"
-            android:fontFamily="@font/tauri"
+            android:fontFamily="@font/quicksand_medium"
             android:textSize="18sp"/>
 
         <TextView
@@ -72,7 +72,7 @@
             android:layout_marginStart="16dp"
             tools:text="+6282242446229"
             android:gravity="center"
-            android:fontFamily="@font/tauri"
+            android:fontFamily="@font/quicksand_medium"
             android:textSize="18sp"/>
 
         <com.chaos.view.PinView

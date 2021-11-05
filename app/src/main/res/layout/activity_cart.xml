@@ -25,9 +25,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/pattaya"
+            android:fontFamily="@font/quicksand_medium"
             android:text="My Schedule"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textColor="@color/navy"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
