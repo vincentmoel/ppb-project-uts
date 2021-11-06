@@ -33,6 +33,15 @@ public class PelajaranAdapter extends FirestoreRecyclerAdapter<PelajaranModel, P
         this.dataCart = dataCart;
     }
 
+    // MEMASUKKAN LAYOUT ITEM ROW KE ADAPTER
+    @NonNull
+    @Override
+    public PelajaranViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row_pelajaran, parent, false);
+        return new PelajaranViewHolder(view);
+    }
+
+    // INISIALISASI & DEFINISI
     public static class PelajaranViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView tvKelas;
@@ -102,6 +111,8 @@ public class PelajaranAdapter extends FirestoreRecyclerAdapter<PelajaranModel, P
         return after.toString();
     }
 
+
+    // MENGATUR PER ITEM
     @SuppressLint("SetTextI18n")
     @Override
     protected void onBindViewHolder(@NonNull PelajaranViewHolder holder, int position, @NonNull PelajaranModel model) {
@@ -165,12 +176,7 @@ public class PelajaranAdapter extends FirestoreRecyclerAdapter<PelajaranModel, P
 
     }
 
-    @NonNull
-    @Override
-    public PelajaranViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row_pelajaran, parent, false);
-        return new PelajaranViewHolder(view);
-    }
+
 
     public interface OnItemClickCallback {
         void onItemAddToCart(PelajaranModel dataPelajaran);

@@ -10,7 +10,6 @@
 
     <RelativeLayout
         android:id="@+id/layout_topBar"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="70dp">
 
