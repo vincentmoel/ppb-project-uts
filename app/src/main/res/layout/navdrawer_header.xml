@@ -6,12 +6,21 @@
     android:layout_height="250dp"
     android:background="@color/navy">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_profilephoto_nav"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:src="@drawable/avatar" />
+
     <ImageView
         android:layout_width="140dp"
         android:layout_height="180dp"
-        android:src="@drawable/studentcrop"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/studentcrop" />
 
     <LinearLayout
         android:layout_width="180dp"

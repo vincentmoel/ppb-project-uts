@@ -124,11 +124,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="lupa Password?"
                     android:fontFamily="@font/quicksand_bold"
-                    app:cornerRadius="16dp"
+                    android:text="lupa Password?"
                     android:textColor="@color/navy"
-                    />
+                    app:cornerRadius="16dp" />
 
             </RelativeLayout>
 

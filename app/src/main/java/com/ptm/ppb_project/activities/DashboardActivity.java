@@ -2,13 +2,17 @@ package com.ptm.ppb_project.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,13 +21,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.ptm.ppb_project.R;
+import com.ptm.ppb_project.model.ProfileModel;
 import com.ptm.ppb_project.model.UserModel;
 import com.ptm.ppb_project.session.SessionManager;
+import com.ptm.ppb_project.sqlite.ProfileViewModel;
+
+import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,11 +40,12 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     MaterialButton btnLogout;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    ImageView ivMenu, ivClose;
+    ImageView ivMenu, ivClose, ivProfile;
     TextView tvNama;
     View viewDrawer;
     RelativeLayout layoutMatematika, layoutFisika, layoutBiologi, layoutKimia;
     FloatingActionButton fab;
+    private ProfileViewModel profileViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,13 +93,21 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         navigationView.bringToFront();
         viewDrawer = navigationView.getHeaderView(0);
+
+        // Hooks
         tvNama = viewDrawer.findViewById(R.id.tv_nama_navdrawer);
+        ivProfile = viewDrawer.findViewById(R.id.iv_profilephoto_nav);
+
+
+        // Settings
+        setSQLite();
         tvNama.setText(loginSession.getLoginSessionData().getFullname());
-
         navigationView.setCheckedItem(R.id.menu_home);
-
         navigationView.setItemTextColor(getColorState());
         navigationView.setItemIconTintList(getColorState());
+
+        // Onclick
+        ivProfile.setOnClickListener(this);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -100,6 +118,20 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 }
 
                 return true;
+            }
+        });
+    }
+
+    private void setSQLite() {
+        profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
+        profileViewModel.getAllProfiles().observe(this, new Observer<List<ProfileModel>>() {
+            @Override
+            public void onChanged(List<ProfileModel> profileModels) {
+                if (profileModels.isEmpty()) {
+                    Glide.with(DashboardActivity.this).load(R.drawable.avatar).into(ivProfile);
+                } else {
+                    Glide.with(DashboardActivity.this).load(Uri.parse(profileModels.get(0).getImage())).into(ivProfile);
+                }
             }
         });
     }
@@ -177,6 +209,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         if (btnId == R.id.fab) {
             Intent intent = new Intent(this, CartActivity.class);
+            startActivity(intent);
+        }
+
+        if (btnId == R.id.iv_profilephoto_nav) {
+            Intent intent = new Intent(this, MyProfileActivity.class);
             startActivity(intent);
         }
     }

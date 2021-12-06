@@ -3,10 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/activity_dashboard.xml" value="0.2222222222222222" />
-        <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/activity_login.xml" value="0.2222222222222222" />
+        <entry key="..\:/github/ppb-project-uts/app/src/main/res/drawable/navdrawer_background.xml" value="0.25833333333333336" />
+        <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/activity_admin_dashboard.xml" value="0.23333333333333334" />
+        <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/activity_dashboard.xml" value="0.2" />
+        <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/activity_login.xml" value="0.536" />
+        <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/activity_my_profile.xml" value="0.264" />
         <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/activity_pelajaran.xml" value="0.2222222222222222" />
         <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/item_dropdown.xml" value="0.21388888888888888" />
+        <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/navdrawer_header.xml" value="0.2361111111111111" />
       </map>
     </option>
   </component>

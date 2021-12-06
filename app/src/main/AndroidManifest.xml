@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ppbproject">
-        <activity android:name=".admin.AddLessonsActivity"></activity>
+        <activity
+            android:name=".activities.MyProfileActivity"
+            android:exported="false" />
+        <activity android:name=".admin.AddLessonsActivity" />
         <activity android:name=".admin.SearchLessonsActivity" />
         <activity android:name=".admin.AdminDashboardActivity" />
         <activity android:name=".activities.CartActivity" />
