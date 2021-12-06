@@ -73,8 +73,7 @@ public class TodayLessonsAdapter extends RecyclerView.Adapter<TodayLessonsAdapte
         holder.getTvWaktu().setText(data.getHari() + ", " + convertToString(data.getStart_at()) + " - " + convertToString(data.getFinish_at()) + " WIB");
 
         // Logic Show More
-        if (getItemCount() < 3) {
-            holder.getTvShowMore().setVisibility(View.GONE);
+        if (getItemCount() % 3 == 0) {
             if (position == getItemCount()-1) {
                 holder.getTvShowMore().setVisibility(View.VISIBLE);
             }
