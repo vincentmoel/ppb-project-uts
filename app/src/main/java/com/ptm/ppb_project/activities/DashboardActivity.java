@@ -26,6 +26,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.ptm.ppb_project.R;
 import com.ptm.ppb_project.model.ProfileModel;
 import com.ptm.ppb_project.model.UserModel;
@@ -45,6 +46,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     View viewDrawer;
     RelativeLayout layoutMatematika, layoutFisika, layoutBiologi, layoutKimia;
     FloatingActionButton fab;
+    FirebaseAuth mAuth;
+    private String userId;
+
     private ProfileViewModel profileViewModel;
 
     @Override
@@ -64,12 +68,13 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         layoutKimia = findViewById(R.id.layout_kimia);
         fab = findViewById(R.id.fab);
 
-
         // Session
         loginSession = new SessionManager(this, SessionManager.LOGIN_SESSION);
         rememberMeSession = new SessionManager(this, SessionManager.REMEMBERME_SESSION);
 
-
+        // Set Firebase
+        mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getUid();
 
         // On Click
         btnLogout.setOnClickListener(this);
@@ -124,13 +129,13 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private void setSQLite() {
         profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
-        profileViewModel.getAllProfiles().observe(this, new Observer<List<ProfileModel>>() {
+        profileViewModel.getProfile(userId).observe(this, new Observer<ProfileModel>() {
             @Override
-            public void onChanged(List<ProfileModel> profileModels) {
-                if (profileModels.isEmpty()) {
+            public void onChanged(ProfileModel profileModel) {
+                if (profileModel == null) {
                     Glide.with(DashboardActivity.this).load(R.drawable.avatar).into(ivProfile);
                 } else {
-                    Glide.with(DashboardActivity.this).load(Uri.parse(profileModels.get(0).getImage())).into(ivProfile);
+                    Glide.with(DashboardActivity.this).load(Uri.parse(profileModel.getImage())).into(ivProfile);
                 }
             }
         });

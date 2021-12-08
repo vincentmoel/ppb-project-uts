@@ -2,24 +2,27 @@ package com.ptm.ppb_project.model;
 
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "profile_table")
 public class ProfileModel {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @PrimaryKey
+    @NonNull
+    private String id;
     private String image;
 
-    public ProfileModel(String image) {
+    public ProfileModel(String id, String image) {
+        this.id = id;
         this.image = image;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

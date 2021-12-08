@@ -40,6 +40,10 @@ public class ProfileRepository {
         return allProfiles;
     }
 
+    public LiveData<ProfileModel> getProfile(String id) {
+        return profileDao.getProfile(id);
+    }
+
     private static class InsertProfileAsyncTask extends AsyncTask<ProfileModel, Void, Void> {
 
         private ProfileDao profileDao;
@@ -99,4 +103,5 @@ public class ProfileRepository {
             return null;
         }
     }
+
 }
