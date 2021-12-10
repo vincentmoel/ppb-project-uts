@@ -12,12 +12,15 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.ptm.ppb_project.R;
 
 public class SearchLessonsActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextInputLayout tiSearch;
     FloatingActionButton fabAddLessons;
+    FirebaseFirestore firestoreRoot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,9 @@ public class SearchLessonsActivity extends AppCompatActivity implements View.OnC
         // Hooks
         tiSearch = findViewById(R.id.ti_searchLessons);
         fabAddLessons = findViewById(R.id.fab_add_lessons);
+
+        // Set Firebase
+        firestoreRoot = FirebaseFirestore.getInstance();
 
         // On Click
         fabAddLessons.setOnClickListener(this);
@@ -44,6 +50,9 @@ public class SearchLessonsActivity extends AppCompatActivity implements View.OnC
         });
 
 
+    }
+
+    private void setRecycler() {
     }
 
     @Override
