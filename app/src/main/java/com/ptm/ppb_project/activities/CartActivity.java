@@ -1,6 +1,7 @@
 package com.ptm.ppb_project.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,8 +16,12 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.Transaction;
 import com.ptm.ppb_project.R;
 import com.ptm.ppb_project.adapter.CartAdapter;
 import com.ptm.ppb_project.model.CartModel;
@@ -62,6 +67,29 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
         rvCart.setAdapter(adapter);
     }
 
+    private void addKuota(String idPelajaran) {
+        firestoreRoot.runTransaction(new Transaction.Function<Void>() {
+            @Nullable
+            @org.jetbrains.annotations.Nullable
+            @Override
+            public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                DocumentReference docRef = firestoreRoot.document("pelajaran/" + idPelajaran);
+                DocumentSnapshot snapshot = transaction.get(docRef);
+                // Logic
+                long kuota = snapshot.getLong("kuota");
+                long sisaKuota = kuota + 1;
+                // End Logic
+                transaction.update(docRef, "kuota", sisaKuota);
+                return null;
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(getBaseContext(), "Delete Success!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public void onItemDeleteFromCart(CartModel dataCart) {
         assert mAuth.getCurrentUser() != null;
@@ -69,7 +97,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(getBaseContext(), "Delete Success!", Toast.LENGTH_SHORT).show();
+                        addKuota(dataCart.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -80,11 +108,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
                 });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
 
     @Override
     public void onClick(View v) {

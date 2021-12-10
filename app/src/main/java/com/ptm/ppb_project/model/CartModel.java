@@ -12,7 +12,6 @@ public class CartModel implements Parcelable {
 
     private long start_at = 0,
             finish_at = 0,
-            kuota = 0,
             created_at = 0;
 
     public CartModel(PelajaranModel dataPelajaran, long currentTimeMillis) {
@@ -23,7 +22,6 @@ public class CartModel implements Parcelable {
         setId(dataPelajaran.getId());
         setStart_at(dataPelajaran.getStart_at());
         setFinish_at(dataPelajaran.getFinish_at());
-        setKuota(dataPelajaran.getKuota());
         setCreated_at(currentTimeMillis);
     }
 
@@ -38,7 +36,6 @@ public class CartModel implements Parcelable {
         id = in.readString();
         start_at = in.readLong();
         finish_at = in.readLong();
-        kuota = in.readLong();
         created_at = in.readLong();
     }
 
@@ -84,14 +81,6 @@ public class CartModel implements Parcelable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public long getKuota() {
-        return kuota;
-    }
-
-    public void setKuota(long kuota) {
-        this.kuota = kuota;
     }
 
     public long getCreated_at() {
@@ -140,7 +129,6 @@ public class CartModel implements Parcelable {
         dest.writeString(id);
         dest.writeLong(start_at);
         dest.writeLong(finish_at);
-        dest.writeLong(kuota);
         dest.writeLong(created_at);
     }
 }
