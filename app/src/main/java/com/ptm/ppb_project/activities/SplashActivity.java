@@ -48,29 +48,22 @@ public class SplashActivity extends AppCompatActivity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                if (isFirstTimeUser()) {
-                    Intent intent = new Intent(getBaseContext(), FirstAuthActivity.class);
+                // Jika Remember Me
+                if (rememberMeSession.isRememberedMe()) {
+                    Intent intent;
+                    if (loginSession.getLoginSessionData().getRole().equals("user")) {
+                        intent = new Intent(getBaseContext(), DashboardActivity.class);
+                        startActivity(intent);
+                    } else {
+                        intent = new Intent(getBaseContext(), AdminDashboardActivity.class);
+                        startActivity(intent);
+                    }
+                    finish();
+
+                } else {
+                    Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                     startActivity(intent);
                     finish();
-                } else {
-                    // Jika Remember Me
-                    if (rememberMeSession.isRememberedMe()) {
-                        Intent intent;
-                        if (loginSession.getLoginSessionData().getRole().equals("user")) {
-                            intent = new Intent(getBaseContext(), DashboardActivity.class);
-                            startActivity(intent);
-                        } else {
-                            intent = new Intent(getBaseContext(), AdminDashboardActivity.class);
-                            startActivity(intent);
-                        }
-                        finish();
-
-                    } else {
-                        Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-
                 }
 
             }
@@ -80,14 +73,4 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-    private boolean isFirstTimeUser() {
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-
-        if (firebaseUser != null) {
-            return false;
-        } else {
-            return true;
-        }
-
-    }
 }

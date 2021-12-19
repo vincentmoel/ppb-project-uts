@@ -25,7 +25,6 @@
         <activity android:name=".activities.DashboardActivity" />
         <activity android:name=".activities.VerifyOtpActivity" />
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.FirstAuthActivity" />
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.SplashActivity">
             <intent-filter>

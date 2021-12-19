@@ -68,12 +68,8 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
         // Get Intent
         fromWhere = getIntent().getStringExtra("from");
-        // Jika dari First Auth
-        if (fromWhere.equals("firstAuth")) {
-            noHp = getIntent().getStringExtra("noHp");
-        }
         // Jika dari Register
-        else if (fromWhere.equals("register")) {
+        if (fromWhere.equals("register")) {
             dataUser = getIntent().getParcelableExtra("dataUser");
             noHp = dataUser.getNoHp();
         }
@@ -146,15 +142,8 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
 
-                        // Jika dari First Auth
-                        if (fromWhere.equals("firstAuth")) {
-                            Toast.makeText(this, "Authentication Complete!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(this, LoginActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
                         // Jika dari register
-                        else if (fromWhere.equals("register")) {
+                        if (fromWhere.equals("register")) {
                             saveDataUserToDB();
                         }
                         // Jika dari login

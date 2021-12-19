@@ -22,13 +22,34 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_kelas_cart"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Kelas 10"
-                android:textSize="16sp"
-                android:fontFamily="@font/quicksand_medium"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_matpel_cart"
+                    android:layout_width="wrap_content"
+                    android:maxWidth="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="4dp"
+                    tools:text="Matematika"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/quicksand_medium"/>
+
+                <TextView
+                    android:id="@+id/tv_kelas_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Kelas 10"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/quicksand_medium"/>
+
+            </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/tv_materi_cart"

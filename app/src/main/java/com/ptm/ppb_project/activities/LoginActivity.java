@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity
                                         if (dataUser.getPassword().equals(password)) {
 
                                             // Jika Akun sama dengan First Auth, tidak perlu verify
-                                            if (isSameWithFirstAuth()) {
+                                            if (isSameWithCurrentAuth()) {
                                                 loginSession.createLoginSession(dataUser);
                                                 if (rememberMeCheckbox.isChecked()) {
                                                     rememberMeSession.createRememberMeSession();
@@ -193,7 +193,7 @@ public class LoginActivity extends AppCompatActivity
         }
     }
 
-    private boolean isSameWithFirstAuth() {
+    private boolean isSameWithCurrentAuth() {
         if (mAuth.getCurrentUser() != null) {
             if (Objects.equals(mAuth.getCurrentUser().getPhoneNumber(), noHp)) {
                 return true;

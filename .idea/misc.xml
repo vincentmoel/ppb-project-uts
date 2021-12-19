@@ -3,14 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/github/ppb-project-uts/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.23981481481481481" />
         <entry key="..\:/github/ppb-project-uts/app/src/main/res/drawable/navdrawer_background.xml" value="0.25833333333333336" />
         <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/activity_admin_dashboard.xml" value="0.23333333333333334" />
         <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/activity_cart.xml" value="0.20092592592592592" />
         <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/activity_dashboard.xml" value="0.2" />
+        <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/activity_first_auth.xml" value="0.2064814814814815" />
         <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/activity_login.xml" value="0.536" />
         <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/activity_my_profile.xml" value="0.264" />
         <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/activity_pelajaran.xml" value="0.2222222222222222" />
+        <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/activity_search_lessons.xml" value="0.19722222222222222" />
         <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/item_dropdown.xml" value="0.21388888888888888" />
+        <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/item_row_cart.xml" value="0.264" />
+        <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/item_row_pelajaran.xml" value="0.19722222222222222" />
+        <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/item_row_search_lessons.xml" value="0.264" />
+        <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/item_row_todaylessons_admin.xml" value="0.264" />
         <entry key="..\:/github/ppb-project-uts/app/src/main/res/layout/navdrawer_header.xml" value="0.2361111111111111" />
       </map>
     </option>

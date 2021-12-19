@@ -28,6 +28,7 @@ public class CartAdapter extends FirestoreRecyclerAdapter<CartModel, CartAdapter
 
     public class CartViewHolder extends RecyclerView.ViewHolder {
 
+        private final TextView tvMatpel;
         private final TextView tvKelas;
         private final TextView tvMateri;
         private final TextView tvWaktu;
@@ -38,12 +39,16 @@ public class CartAdapter extends FirestoreRecyclerAdapter<CartModel, CartAdapter
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            tvMatpel = itemView.findViewById(R.id.tv_matpel_cart);
             tvKelas = itemView.findViewById(R.id.tv_kelas_cart);
             tvMateri = itemView.findViewById(R.id.tv_materi_cart);
             tvWaktu = itemView.findViewById(R.id.tv_waktu_cart);
             tvCreatedAt = itemView.findViewById(R.id.tv_createdAt);
             ivMinus = itemView.findViewById(R.id.iv_minus_cart);
 
+        }
+        public TextView getTvMatpel() {
+            return tvMatpel;
         }
 
         public TextView getTvKelas() {
@@ -70,6 +75,7 @@ public class CartAdapter extends FirestoreRecyclerAdapter<CartModel, CartAdapter
     @SuppressLint("SetTextI18n")
     @Override
     protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull CartModel model) {
+        holder.getTvMatpel().setText(model.getMatpel());
         holder.getTvKelas().setText("Kelas " + model.getKelas());
         holder.getTvMateri().setText(model.getMateri());
         holder.getTvWaktu().setText(model.getHari() + ", " + convertToString(model.getStart_at()) + " - " + convertToString(model.getFinish_at()) + " WIB");

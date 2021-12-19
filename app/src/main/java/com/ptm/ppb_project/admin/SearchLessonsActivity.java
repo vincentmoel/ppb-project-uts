@@ -10,11 +10,13 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.ptm.ppb_project.R;
+import com.ptm.ppb_project.model.PelajaranModel;
 
 public class SearchLessonsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -53,6 +55,15 @@ public class SearchLessonsActivity extends AppCompatActivity implements View.OnC
     }
 
     private void setRecycler() {
+        Query query = firestoreRoot.collection("pelajaran")
+                .orderBy("kelas", Query.Direction.ASCENDING)
+                .orderBy("start_at", Query.Direction.ASCENDING)
+                .limit(3);
+
+        FirestoreRecyclerOptions<PelajaranModel> options = new FirestoreRecyclerOptions.Builder<PelajaranModel>()
+                .setLifecycleOwner(this)
+                .setQuery(query, PelajaranModel.class)
+                .build();
     }
 
     @Override

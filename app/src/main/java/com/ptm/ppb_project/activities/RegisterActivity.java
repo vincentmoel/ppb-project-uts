@@ -1,6 +1,5 @@
 package com.ptm.ppb_project.activities;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,27 +8,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.Transaction;
 import com.ptm.ppb_project.R;
 import com.ptm.ppb_project.data.DataKelas;
 import com.ptm.ppb_project.model.UserModel;
 import com.ptm.ppb_project.session.SessionManager;
 
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
@@ -38,7 +28,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     AutoCompleteTextView dropdownNamaKelas;
     TextInputLayout tiFullname, tiKelas, tiNamaKelas, tiAbsen, tiEmail, tiNoHp, tiPassword;
     MaterialButton btnRegister;
-    FirebaseAuth mAuth;
     FirebaseFirestore firestoreRoot;
     String fullname, kelas, namaKelas, absen, email, noHp, password;
     SessionManager loginSession;
@@ -62,7 +51,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         tiPassword = findViewById(R.id.ti_password_register);
 
         // Set Firebase
-        mAuth = FirebaseAuth.getInstance();
         firestoreRoot = FirebaseFirestore.getInstance();
 
         // Set Session
@@ -151,17 +139,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                         if (!goIntent) {
                                             return;
                                         }
-                                        // Jika nomor HP sama dgn First Auth, tidak perlu verify
-                                        if (isSameWithFirstAuth()) {
-                                            saveDataUserToDB();
-                                        }
-                                        // Jika nomor HP beda dgn First Auth, maka harus verify
-                                        else {
-                                            Intent intent = new Intent(getBaseContext(), VerifyOtpActivity.class);
-                                            intent.putExtra("from", "register");
-                                            intent.putExtra("dataUser", getDataUser());
-                                            startActivity(intent);
-                                        }
+                                        // Intent to Verify OTP
+                                        Intent intent = new Intent(getBaseContext(), VerifyOtpActivity.class);
+                                        intent.putExtra("from", "register");
+                                        intent.putExtra("dataUser", getDataUser());
+                                        startActivity(intent);
+
                                     }
                                 }
                             });
@@ -268,65 +251,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         dropdownNamaKelas.setAdapter(namaKelasAdapter);
     }
 
-    private void saveDataUserToDB() {
-
-        if (mAuth.getCurrentUser() != null) {
-            String uid = mAuth.getCurrentUser().getUid();
-            UserModel dataUser = getDataUser();
-            firestoreRoot.document("users/" + uid).set(dataUser)
-                    .addOnSuccessListener(this, new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(getBaseContext(), "Register Complete!", Toast.LENGTH_SHORT).show();
-                            loginSession.createLoginSession(dataUser);
-                            addUserToStats();
-                            Intent intent = new Intent(getBaseContext(), DashboardActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    })
-                    .addOnFailureListener(this, new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getBaseContext(), "Register Failed!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
-
-    }
-
-    private void addUserToStats() {
-        firestoreRoot.runTransaction(new Transaction.Function<Void>() {
-            @Nullable
-            @org.jetbrains.annotations.Nullable
-            @Override
-            public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
-                DocumentReference docRef = firestoreRoot.document("stats/qty");
-                DocumentSnapshot dataSnapshot = transaction.get(docRef);
-                // Logic
-                long newStat = dataSnapshot.getLong("user") + 1;
-                transaction.update(docRef, "user", newStat);
-                return null;
-            }
-        });
-    }
 
     private UserModel getDataUser() {
         UserModel dataUser = new UserModel(fullname, kelas, namaKelas, absen, email, noHp, password, role, String.valueOf(System.currentTimeMillis()));
         return dataUser;
     }
 
-    private boolean isSameWithFirstAuth() {
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        if (firebaseUser != null) {
-            if (Objects.equals(firebaseUser.getPhoneNumber(), noHp)) {
-                return true;
-            } else  {
-                return false;
-            }
-        }
-        return false;
-    }
 
     @Override
     public void onBackPressed() {

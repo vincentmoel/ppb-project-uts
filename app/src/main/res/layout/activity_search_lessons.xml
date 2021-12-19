@@ -72,12 +72,13 @@
             android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_search_lessons"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/item_row_todaylessons_admin"/>
+                tools:listitem="@layout/item_row_search_lessons"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
